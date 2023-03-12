@@ -9,6 +9,7 @@ using namespace std;
 
 class Solution{
 public:
+    
     int matrixMultiplication(int N, int arr[])
     {
         // code here
@@ -30,6 +31,9 @@ public:
             
         }
         return dp[0][N-1];
+   
+        
+        
     }
 };
 
