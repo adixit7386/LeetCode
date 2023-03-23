@@ -4,6 +4,33 @@ using namespace std;
 class Solution {
 public:
     int superEggDrop(int k, int n) {
+        
+//         vector<vector<int>> dp(e+1,vector<int> (f+1,0));
+//         for(int i=0;i<=f;i++){
+        
+//             dp[1][i]=i;
+//         }
+//         for(int i=1;i<=e;i++){
+//             dp[i][1]=1;
+            
+//         }
+        
+//         for(int i=2;i<=e;i++){
+//             for(int j=2;j<=f;j++){
+//                 int res=INT_MAX;
+//                 for(int p=1;p<=j;p++){
+//                     int m=max(dp[i][j-p],dp[i-1][p-1]);
+//                     res=min(res,1+m);
+//                 }
+//                 dp[i][j]=res;
+//                 cout<<dp[i][j]<<" ";
+//             }
+//             cout<<endl;
+//         }
+        
+        
+//         return dp[e][f];
+        
         // if(k==1){
         //     return n;
         // }
