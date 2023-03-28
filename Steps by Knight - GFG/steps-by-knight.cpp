@@ -5,54 +5,71 @@ using namespace std;
 // } Driver Code Ends
 class Solution 
 {
+    
     public:
     //Function to find out minimum steps Knight needs to reach target position.
-	int minStepToReachTarget(vector<int>&KnightPos,vector<int>&targetPos,int N)
+    bool isvalid(int i,int j){
+        if(i==0||j==0){
+            return false;
+        }
+        if(abs(abs(i)-abs(j))==1){
+            return true;
+        }
+        return false;
+    }
+	int minStepToReachTarget(vector<int>&KnightPos,vector<int>&targetPos,int n)
 	{
 	    // Code here
-	    if(N==1){
+	    vector<vector<int>> grid(n+1,vector<int> (n+1,0));
+	    grid[targetPos[0]][targetPos[1]]=1;
+	   
+	    if(targetPos[0]==KnightPos[0]&&targetPos[1]==KnightPos[1]){
 	        return 0;
 	    }
-	    vector<vector<bool>> vis(N+1,vector<bool> (N+1,false));
+        int count=1;
+        queue<pair<int,int>> q;
+        vector<vector<int>> vis(n+1,vector<int> (n+1,false));
+       
+        q.push({KnightPos[0],KnightPos[1]});
+        q.push({-1,-1});
+        
+        vis[KnightPos[0]][KnightPos[1]]=true;
+       
+        
+        
+        while(q.size()>1){
+            pair<int,int> currPt=q.front();
+            q.pop();
+            
+            if(currPt.first==-1){
+                count++;
+                q.push({-1,-1});
+            }else{
+                for(int i=-2;i<=2;i++){
+                for(int j=-2;j<=2;j++){
+                    if(isvalid(i,j)){
+                        int x=currPt.first+i;
+                        int y=currPt.second+j;
+                        // cout<<grid[x][y]<<" "<<checkx<<endl;
+                        
+                        if(x>=1&&x<=n&&y>=1&&y<=n&&vis[x][y]==false){
+                            if(targetPos[0]==x&&targetPos[1]==y)
+                            return count;
+                            
+                            vis[x][y]=true;
+                            // cout<<x<<y<<endl;
+                            q.push({x,y});
+                        }
+                    }
+                }
+            }
+            }
+            
+            
+          
+        }
+        return -1;
 	    
-	    queue<pair<int,int>> q;
-	    
-	    q.push({KnightPos[0],KnightPos[1]});
-	    vis[KnightPos[0]][KnightPos[1]]=true;
-	    int count=0;
-	   
-	    
-	    while(q.empty()==false){
-	        count++;
-	        
-	        int size=q.size();
-	        while(size--){
-	            
-	        pair<int,int> pr=q.front();
-	        q.pop();
-	        vector<int> first={-1,-2,1,2};
-	        
-	       
-	        for(int i=0;i<4;i++){
-	            for(int j=0;j<4;j++){
-	                if(abs(abs(first[i])-abs(first[j]))==1){
-	                    int xval=pr.first+first[i];
-	                    int yval=pr.second+first[j];
-	                    if(xval==targetPos[0]&& yval==targetPos[1]){
-	                        return count;
-	                    }
-	                    if(xval>=1&&xval<N+1&&yval>=1&&yval<N+1&&vis[xval][yval]==false){
-	                        
-	                        q.push({xval,yval});
-	                        vis[xval][yval]=true;
-	                    }
-	                    
-	                    
-	                }
-	            }
-	        }
-	        }
-	    }
 	}
 };
 
