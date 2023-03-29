@@ -1,47 +1,86 @@
 class Solution {
 public:
-    
-    int countSubsets(vector<string>& strs,int size, int m, int n,vector<vector<vector<int>>> &dp){
+//     int countSubsets(int size,int m,int n,unordered_map<int,pair<int,int>>& mp){
+//         // if(m<0||n<0){
+//         //     return -1;
+//         // }
+//         if(m==0&&n==0){
+//             return 0;
+//         }
+//         if(size==0){
+//             return 0;
+//         }
+//         int include=-1;
+//         if(m>=mp[size-1].first&&n>=mp[size-1].second)
+//         include=countSubsets(size-1,m-mp[size-1].first,n-mp[size-1].second,mp);
+      
+//         if(include!=-1){
+//             include++;
+//         }
+//         int notinclude=countSubsets(size-1,m,n,mp);
        
-        if(m<0||n<0){
-            return -1;
-        }
+//         // if(include==-1 && notinclude==-1){
+//         //     return -1;
+//         // }
+//         // if(include==-1){
+//         //     return notinclude;
+//         // }
+//         // if(notinclude==-1){
+//         //     return include;
+//         // }
+//         return max(include,notinclude);
         
-        
-        if(dp[size][m][n]!=-1){
-            return dp[size][m][n];
-        }
-        
-        int countOnes=count(strs[size-1].begin(), strs[size-1].end(), '1');
-        int countZeroes=count(strs[size-1].begin(), strs[size-1].end(), '0');
-        
-        int include=countSubsets(strs,size-1,m-countZeroes,n-countOnes,dp);
-        int notInclude=countSubsets(strs,size-1,m,n,dp);
-        if(include!=-1){
-            include++;
-        }
-        int res=max(include,notInclude);
-        if(res==-1){
-            dp[size][m][n]=-1;
-        }else{
-            dp[size][m][n]=res;
-        }
-        
-        return dp[size][m][n];
-    }
+//     }
     int findMaxForm(vector<string>& strs, int m, int n) {
-        int size=strs.size();
-        vector<vector<vector<int>>> dp(size+1,vector<vector<int>> (m+1,vector<int> (n+1,-1)));
         
-         
-            for(int j=0;j<=m;j++){
-                for(int k=0;k<=n;k++){
-                    
-                        dp[0][j][k]=0;
-                    
+        unordered_map<int,pair<int,int>> mp;
+        
+        for(int i=0;i<strs.size();i++){
+            string st=strs[i];
+            int count1s=0;
+            int count0s=0;
+            for(auto ch:st){
+                if(ch=='1'){
+                    count1s++;
+                }
+                if(ch=='0'){
+                    count0s++;
                 }
             }
+            mp[i]={count0s,count1s};
+        }
+        // int ans=0;
+        int size=strs.size();
+        // ans=countSubsets(strs.size(),m,n,mp);
+        vector<vector<vector<int>>> dp(size+1,vector<vector<int>> (m+1,vector<int> (n+1,0)) );
+        for(int i=0;i<=m;i++){
+            for(int j=0;j<=n;j++){
+                dp[0][i][j]=0;
+                
+            }
+        }
+        for(int i=0;i<=size;i++){
+            dp[i][0][0]=0;
+        }
         
-        return countSubsets(strs,strs.size(),m,n,dp);
+        
+        for(int i=1;i<=size;i++){
+            for(int j=0;j<=m;j++){
+                for(int k=0;k<=n;k++){
+                    int include=-1;
+                    if(j>=mp[i-1].first&&k>=mp[i-1].second)
+                        include=dp[i-1][j-mp[i-1].first][k-mp[i-1].second];
+                    if(include!=-1){
+                        include++;
+                    }
+                    int notinclude=dp[i-1][j][k];
+                    dp[i][j][k]=max(include,notinclude);
+                }
+            }
+        }
+     
+        return dp[size][m][n];
+        
+        
     }
 };
