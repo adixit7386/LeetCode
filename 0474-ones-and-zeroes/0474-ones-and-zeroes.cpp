@@ -52,34 +52,37 @@ public:
         // int ans=0;
         int size=strs.size();
         // ans=countSubsets(strs.size(),m,n,mp);
-        vector<vector<vector<int>>> dp(size+1,vector<vector<int>> (m+1,vector<int> (n+1,0)) );
+        // vector<vector<vector<int>>> dp(size+1,vector<vector<int>> (m+1,vector<int> (n+1,0)) );
+        
+    vector<vector<int>> prev(m+1,vector<int> (n+1,0)) ;
+        vector<vector<int>> curr(m+1,vector<int> (n+1,0)) ;
         for(int i=0;i<=m;i++){
             for(int j=0;j<=n;j++){
-                dp[0][i][j]=0;
+                prev[i][j]=0;
                 
             }
         }
-        for(int i=0;i<=size;i++){
-            dp[i][0][0]=0;
-        }
+        prev[0][0]=0;
         
         
         for(int i=1;i<=size;i++){
+            
             for(int j=0;j<=m;j++){
                 for(int k=0;k<=n;k++){
                     int include=-1;
                     if(j>=mp[i-1].first&&k>=mp[i-1].second)
-                        include=dp[i-1][j-mp[i-1].first][k-mp[i-1].second];
+                        include=prev[j-mp[i-1].first][k-mp[i-1].second];
                     if(include!=-1){
                         include++;
                     }
-                    int notinclude=dp[i-1][j][k];
-                    dp[i][j][k]=max(include,notinclude);
+                    int notinclude=prev[j][k];
+                    curr[j][k]=max(include,notinclude);
                 }
             }
+            prev=curr;
         }
      
-        return dp[size][m][n];
+        return prev[m][n];
         
         
     }
