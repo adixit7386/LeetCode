@@ -5,20 +5,21 @@ public:
     }
     vector<int> topKFrequent(vector<int>& nums, int k) {
         map<int,int> mp;
-        vector<pair<int,int>> ans;
         for(auto el:nums){
            
             mp[el]++;
         }
+        priority_queue<pair<int,int>> pq;
         for(auto ch:mp){
-            ans.push_back({ch.first,ch.second});
+            pq.push({ch.second,ch.first});
         }
-        sort(ans.begin(),ans.end(),myComp);
-        int i=0;
+        
+        
+       
         vector<int> ans1;
-        while(i<k){
-            ans1.push_back(ans[i].first);
-                i++;
+        while(k--){
+           ans1.push_back(pq.top().second);
+            pq.pop();
         }
         
         return ans1;
