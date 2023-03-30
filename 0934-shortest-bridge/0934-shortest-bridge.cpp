@@ -1,73 +1,64 @@
 class Solution {
 public:
-    int bfs(vector<vector<int>> &grid,queue<pair<int,int>> &q,vector<vector<bool>> &vis){
-        
+    int getCount(vector<vector<int>>& grid,queue<pair<int,int>>& q,vector<vector<bool>> &vis){
+        int n=grid.size();
+        int m=grid[0].size();
+       
         int count=0;
-        int v=grid.size();
-        q.push({101,101});
-        
         while(q.size()>1){
-          
-            pair<int,int> point=q.front();
-            
-            
-            if(point.first==101){
-                q.pop();
-                
+            pair<int,int> pr=q.front();
+            q.pop();
+            // cout<<pr.first<<" "<<pr.second<<" ";
+            if(pr.first==-1){
                 count++;
-                q.push({101,101});
-                
-            }else{
-                q.pop();
+                q.push({-1,-1});
+            }
+            
+            
             
             for(int i=-1;i<=1;i++){
                 for(int j=-1;j<=1;j++){
-                    if((abs(i)+abs(j))==1){
-                        int px=point.first+i;
-                        int py=point.second+j;
-                         
-                        if(px>=0 && py>=0 && px<v && py<v && vis[px][py]==false){
-                            
-                            if(grid[px][py]==1){
+                    if(abs(abs(i)-abs(j))==1){
+                        
+                        int x=pr.first+i;
+                        int y=pr.second+j;
+
+                        if(x<n&&x>=0&&y>=0&&y<m&&vis[x][y]==false){
+                            if(grid[x][y]==1){
                                 return count;
                             }
-                            vis[px][py]=true;
-                            q.push({px,py});
-                          
+                            vis[x][y]=true;
+                            q.push({x,y});
                         }
                     }
                 }
-            }
             }
             
         }
         return INT_MAX;
     }
-    void bfsVis(vector<vector<int>> &grid,vector<vector<bool>> &vis,int sourceX,int sourceY, queue<pair<int,int>> &req){
+    void bfs(int i,int j,vector<vector<int>>& grid,vector<vector<bool>> &vis,queue<pair<int,int>>& qreal){
+        int n=grid.size();
+        int m=grid[0].size();
+        queue<pair<int,int>> q;
+        vis[i][j]=true;
+        q.push({i,j});
         
-        int v=grid.size();
-       
-       
-       queue<pair<int,int>> q;
-        q.push({sourceX,sourceY});
-        vis[sourceX][sourceY]=true;
-        
-        while(q.empty()==false){
-           
-            pair<int,int> point=q.front();
+        while(!q.empty()){
+            pair<int,int> pr=q.front();
             q.pop();
-            req.push(point);
+            qreal.push(pr);
+            
             for(int i=-1;i<=1;i++){
                 for(int j=-1;j<=1;j++){
-                    if((abs(i)+abs(j))==1){
-                        int px=point.first+i;
-                        int py=point.second+j;
-                         
-                        if(px>=0 && py>=0 && px<v && py<v && vis[px][py]==false&&grid[px][py]==1){
-                           
-                            vis[px][py]=true;
-                            q.push({px,py});
-                            
+                    if(abs(abs(i)-abs(j))==1){
+                        
+                        int x=pr.first+i;
+                        int y=pr.second+j;
+
+                        if(x<n&&x>=0&&y>=0&&y<m&&vis[x][y]==false&&grid[x][y]==1){
+                            vis[x][y]=true;
+                            q.push({x,y});
                         }
                     }
                 }
@@ -77,30 +68,28 @@ public:
         
     }
     int shortestBridge(vector<vector<int>>& grid) {
-        int res=INT_MAX;
-        int v=grid.size();
-        vector<vector<bool>> vis(v,vector<bool> (v,false));
         queue<pair<int,int>> q;
+        int n=grid.size();
+        int m=grid[0].size();
+        vector<vector<bool>> vis(n,vector<bool> (m,false));
+        int i,j;
         bool flag=false;
-        for(int i=0;i<grid.size();i++){
-            int j;
-            
-            for( j=0;j<grid[0].size();j++){
-                
+        for(i=0;i<n;i++){
+            for(j=0;j<m;j++){
                 if(grid[i][j]==1){
-                    
-                bfsVis(grid,vis,i,j,q);
+                    bfs(i,j,grid,vis,q);
                     flag=true;
-                   break;
-                    }
+                    break;
+                    
+                }
             }
-            if(flag){
+            if(flag==true){
                 break;
             }
-            }
-      
-        return bfs(grid,q,vis);
-         
+        }
+        q.push({-1,-1});
+        
+        return getCount(grid,q,vis);
+        
     }
-   
 };
