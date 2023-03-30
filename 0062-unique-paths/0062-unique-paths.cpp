@@ -13,20 +13,25 @@ public:
         //     left=uniquePaths(m,n-1);
         // }
         // return top+left;
-        vector<vector<int>> dp(m+1,vector<int> (n+1,1));
+        // vector<vector<int>> dp(m+1,vector<int> (n+1,1));
+        vector<int> prev(n+1,1);
+        vector<int> curr(n+1,1);
         for(int i=2;i<=m;i++){
+            curr[1]=1;
             for(int j=2;j<=n;j++){
+                
                 int top=0,left=0;
                 if(i>1){
-                    top=dp[i-1][j];   
+                    top=prev[j];   
                 }
                 if(j>1){
-                    left=dp[i][j-1];
+                    left=curr[j-1];
                 }
-                dp[i][j]=top+left;
+                curr[j]=top+left;
+                prev=curr;
             }
         }
        
-        return dp[m][n];
+        return prev[n];
     }
 };
