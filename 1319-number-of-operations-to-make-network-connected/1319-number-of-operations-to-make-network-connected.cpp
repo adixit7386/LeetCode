@@ -1,34 +1,50 @@
 class Solution {
 public:
-    void dfs(int s,vector<bool> &vis,vector<int> adj[]){
-        vis[s]=true;
-        
-        for(auto u:adj[s]){
-            if(vis[u]==false){
-                dfs(u,vis,adj);
+    void bfs(vector<int> adj[],int src,vector<bool> &vis){
+       vis[src]=true;
+        queue<int> q;
+        q.push(src);
+        while(!q.empty()){
+            int el=q.front();
+            q.pop();
+            for(auto neighbour:adj[el]){
+                if(vis[neighbour]==false){
+                    vis[neighbour]=true;
+                    q.push(neighbour);
+                }
             }
         }
+        
     }
-    int makeConnected(int n, vector<vector<int>>& connections) {
-        vector<int> adj[n];
+    int makeConnected(int size, vector<vector<int>>& connections) {
         int edges=connections.size();
-        for(int i=0;i<connections.size();i++){
-            adj[connections[i][0]].push_back(connections[i][1]);
-            adj[connections[i][1]].push_back(connections[i][0]);
-            
-        }
+        vector<int> adj[size];
         
-        vector<bool> vis(n,false);
+//         vector<vector<int>> grid(size,vector<int> (size,0));
+        
+        for(auto wire:connections){
+            // grid[wire[0]][wire[1]]=true;
+            adj[wire[0]].push_back(wire[1]);
+            adj[wire[1]].push_back(wire[0]);
+        }
+        // int n=grid.size();
+        // int m=grid[0].size();
+        // vector<vector<bool>> vis(n,vector<bool> (m,false));
+        
+        vector<bool> vis(size,false);
+        int i,j;
         int count=0;
-        for(int i=0;i<n;i++){
+        for(int i=0;i<size;i++){
             if(vis[i]==false){
+                bfs(adj,i,vis);
                 count++;
-                dfs(i,vis,adj);
             }
         }
-        if(edges<n-1){
-            return -1;
-        }
+       if(edges<size-1){
+           return -1;
+       }
         return count-1;
+        
+
     }
 };
