@@ -7,15 +7,7 @@ public:
             return 1;
         }
         vector<int> arr((n*n)+1,-1);
-        
         vector<bool> vis((n*n)+1,false);
-        // int idx=0;
-        // for(int i=0;i<n;i++){
-        //     for(int j=0;j<n;j++){
-        //         arr[i*n+j+1]=board[i][j];
-        //         // cout<<arr[i*n+j]<<" ";
-        //     }
-        // }
         int idx=1;
         int row=n-1;
         bool flag=true;
@@ -36,7 +28,6 @@ public:
             }
             row--;
             flag=!flag;
-            
         }
         for(int i=1;i<=n*n;i++) cout<<arr[i]<<" ";
         q.push(1);
@@ -71,16 +62,13 @@ public:
                         {
                             if(vis[arr[top+i]]==false){
                             q.push(arr[top+i]);
-                            // cout<<vis.size()<<endl;
-                            // cout<<arr[top+i]<<endl;
                             vis[arr[top+i]]=true;
                             }
-                            // q.push(top+i);
+                            
                         }
+                        
                     }else{
-                        // return count;
                         q.push(top+i);
-                        // vis[top+i]=true;
                     }
 
                 }
