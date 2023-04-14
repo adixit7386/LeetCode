@@ -117,66 +117,15 @@ struct Node
 //     inorder(root->right,mp);
 // }
 void inorder(Node* root,Node* &pre,Node* &suc,int key){
-    if(root==NULL){
-        return;
-    }
+    if(root==NULL)return;
     inorder(root->left,pre,suc,key);
-    if(root->key<key){
-        pre=root;
-    }
-    if(root->key>key){
-        if(suc==NULL){
-            suc=root;
-        }
-    }
+    if(root->key<key)pre=root;
+    if(root->key>key)if(suc==NULL)suc=root;
     inorder(root->right,pre,suc,key);
 }
 void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
 {
-
-// Your code goes here
-    // if(root==NULL){
-    //     return ;
-    // }
-    // if(root->key>=key){
-    //     Node* curr=root;
-    //     curr=curr->left;
-    //     if(curr!=NULL){
-    //         while(curr->right!=NULL){
-    //             curr=curr->right;
-    //         }
-    //     }
-    //     pre=curr;
-    // }
-    // if(root->key<=key){
-    //     Node* curr=root;
-    //     curr=curr->right;
-    //     if(curr!=NULL){
-    //         while(curr->left!=NULL){
-    //         curr=curr->left;
-    //         }
-    //     }
-    //     suc=curr;
-    //     return;
-    // }
-    // findPreSuc(root->left,pre,suc,key);
-    // findPreSuc(root->right,pre,suc,key);
-    // map<int,Node*> mp;
-    // inorder(root,mp);
-    // pre=NULL;
-    // suc=NULL;
-    // for(auto it:mp){
-    //     if(it.first==key){
-            
-    //     }else if(it.first<key){
-    //         pre=it.second;
-    //     }else{
-    //         if(suc==NULL)
-    //         suc=it.second;
-    //     }
-    // }
     pre=NULL;
     suc=NULL;
     inorder(root,pre,suc,key);
-
 }
