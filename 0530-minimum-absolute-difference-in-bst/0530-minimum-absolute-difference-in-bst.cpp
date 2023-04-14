@@ -12,19 +12,11 @@
 class Solution {
 public:
     void inorder(TreeNode* root,TreeNode* &prev,int &ans){
-        if(root==NULL){
-            return;
-        }
+        if(root==NULL)return;
         inorder(root->left,prev,ans);
-        if(prev==NULL){
-            
-        }else{
-            ans=min(ans,root->val-prev->val);
-            
-        }
+        if(prev!=NULL) ans=min(ans,root->val-prev->val);
         prev=root;
         inorder(root->right,prev,ans);
-        
     }
     int getMinimumDifference(TreeNode* root) {
         int ans=INT_MAX;
