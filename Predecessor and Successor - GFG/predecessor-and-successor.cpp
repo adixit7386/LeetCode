@@ -108,13 +108,28 @@ struct Node
 // This function finds predecessor and successor of key in BST.
 // It sets pre and suc as predecessor and successor respectively
 #include<bits/stdc++.h>
-void inorder(Node* root,map<int,Node*> &mp){
+// void inorder(Node* root,map<int,Node*> &mp){
+//     if(root==NULL){
+//         return;
+//     }
+//     inorder(root->left,mp);
+//     mp[root->key]=root;
+//     inorder(root->right,mp);
+// }
+void inorder(Node* root,Node* &pre,Node* &suc,int key){
     if(root==NULL){
         return;
     }
-    inorder(root->left,mp);
-    mp[root->key]=root;
-    inorder(root->right,mp);
+    inorder(root->left,pre,suc,key);
+    if(root->key<key){
+        pre=root;
+    }
+    if(root->key>key){
+        if(suc==NULL){
+            suc=root;
+        }
+    }
+    inorder(root->right,pre,suc,key);
 }
 void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
 {
@@ -146,19 +161,22 @@ void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
     // }
     // findPreSuc(root->left,pre,suc,key);
     // findPreSuc(root->right,pre,suc,key);
-    map<int,Node*> mp;
-    inorder(root,mp);
+    // map<int,Node*> mp;
+    // inorder(root,mp);
+    // pre=NULL;
+    // suc=NULL;
+    // for(auto it:mp){
+    //     if(it.first==key){
+            
+    //     }else if(it.first<key){
+    //         pre=it.second;
+    //     }else{
+    //         if(suc==NULL)
+    //         suc=it.second;
+    //     }
+    // }
     pre=NULL;
     suc=NULL;
-    for(auto it:mp){
-        if(it.first==key){
-            
-        }else if(it.first<key){
-            pre=it.second;
-        }else{
-            if(suc==NULL)
-            suc=it.second;
-        }
-    }
+    inorder(root,pre,suc,key);
 
 }
