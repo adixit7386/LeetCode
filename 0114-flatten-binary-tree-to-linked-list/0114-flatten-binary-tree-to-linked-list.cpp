@@ -24,23 +24,16 @@ public:
         }
         //work
         TreeNode* right=root->right;
+        TreeNode* left=root->left;
         if(prev==NULL){
-            prev=root;
-            // head=root;
+            root->left=NULL;
         }else{
             prev->right=root;
-            
-            prev=root;
-            
+            root->left=NULL;
         }
-        
-        
-        flattenTree(root->left);
+        prev=root;
+        flattenTree(left);
         flattenTree(right);
-        
-        
-    
-        
     }
     void flatten(TreeNode* root) {
         if(root==NULL){
@@ -48,11 +41,11 @@ public:
         }
         prev=NULL;
         flattenTree(root);
-        prev->right=NULL;
-        while(root!=NULL){
-            root->left=NULL;
-            root=root->right;
-        }
+        // prev->right=NULL;
+        // while(root!=NULL){
+        //     root->left=NULL;
+        //     root=root->right;
+        // }
         return;
             
         
