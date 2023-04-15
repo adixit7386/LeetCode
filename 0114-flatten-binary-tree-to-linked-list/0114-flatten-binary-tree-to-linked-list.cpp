@@ -14,15 +14,7 @@ public:
     TreeNode* prev;
     // TreeNode* head;
     void flattenTree(TreeNode* root){
-        if(root==NULL){
-            // if(prev==NULL){
-            //     return;
-            // }else{
-            //     prev->right=NULL;
-            // }
-            return;
-        }
-        //work
+        if(root==NULL)return;\
         TreeNode* right=root->right;
         TreeNode* left=root->left;
         if(prev==NULL){
@@ -36,18 +28,8 @@ public:
         flattenTree(right);
     }
     void flatten(TreeNode* root) {
-        if(root==NULL){
-            return;
-        }
+        if(root==NULL)return;
         prev=NULL;
         flattenTree(root);
-        // prev->right=NULL;
-        // while(root!=NULL){
-        //     root->left=NULL;
-        //     root=root->right;
-        // }
-        return;
-            
-        
     }
 };
