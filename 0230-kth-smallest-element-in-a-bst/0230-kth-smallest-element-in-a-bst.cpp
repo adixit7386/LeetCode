@@ -22,10 +22,10 @@ public:
             return;
         }
         findkthSmallest(root->left);
-        if(curr==target && ans==-1){
+        if(curr==target ){
             // cout<<root->val<<endl;
             ans=root->val;
-            return;
+            
         }
         curr++;
         findkthSmallest(root->right);
