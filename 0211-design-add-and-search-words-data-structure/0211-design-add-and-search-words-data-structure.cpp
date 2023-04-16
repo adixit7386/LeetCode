@@ -1,73 +1,50 @@
 class WordDictionary {
-    bool isEnd;
-    WordDictionary* children[26];
-
 public:
+    bool isEnd;
+    vector<WordDictionary*> children;
     WordDictionary() {
         isEnd=false;
-        
-        for(int i=0;i<26;i++){
-            children[i]=NULL;
-        }
-
-
+        children.resize(26,NULL);
     }
     
     void addWord(string word) {
-
         WordDictionary* curr=this;
-
         for(int i=0;i<word.length();i++){
             int index=word[i]-'a';
-
             if(curr->children[index]==NULL){
                 curr->children[index]=new WordDictionary();
             }
             curr=curr->children[index];
         }
-
         curr->isEnd=true;
-        
     }
     
     bool search(string word) {
         WordDictionary* curr=this;
-
         for(int i=0;i<word.length();i++){
-            int index=word[i]-'a';
-            if(word[i]=='.'){ 
-                int k=0;
-                for(k=0;k<26;k++){
-                    if(curr->children[k]!=NULL){
-                        if(i==word.length()-1){
-                            
-                            if(curr->children[k]->isEnd==true){
-                                return true;
-                            }
+            if(word[i]=='.'){
+                for(int j=0;j<26;j++){
+                    if(curr->children[j]!=NULL){
+                        if(i==word.size()-1){
+                            if(curr->children[j]->isEnd==true) return true;
+                            continue;
                         }
-                        
-                        else if(curr->children[k]->search(word.substr(i+1,word.length()-i))){
-                            return true;
+                        else if(curr->children[j]->search(word.substr(i+1,word.size()-i-1))){
+                                return true;
                         }
                     }
-
                 }
-                if(k==26){
-                    return false;
-                }
-
+                return false;
             }else{
-
-
+               int index=word[i]-'a';
                 if(curr->children[index]==NULL){
                     return false;
                 }
+                curr=curr->children[index]; 
             }
-            curr=curr->children[index];
+            
         }
-
         return curr->isEnd==true;
-        
     }
 };
 
