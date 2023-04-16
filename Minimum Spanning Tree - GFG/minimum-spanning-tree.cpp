@@ -3,43 +3,35 @@
 using namespace std;
 
 // } Driver Code Ends
-
-
 class Solution
 {
 	public:
-	
+	//Function to find sum of weights of edges of the Minimum Spanning Tree.
     int spanningTree(int V, vector<vector<int>> adj[])
     {
-    //   for(int i=0;i<V;i++){
-    //       for(auto vec:adj[i]){
-    //           for(auto el:vec){
-    //               cout<<el<<" ";
-    //           }
-    //           cout<<endl;
-    //       }
-    //       cout<<endl;
-    //   }
-       priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
-       vector<bool> vis(V,false);
-       pq.push({0,0});
-       int res=0;
-       while(!pq.empty()){
-           pair<int,int> pt=pq.top();
-           pq.pop();
-           if(vis[pt.second])continue;
-           vis[pt.second]=true;
-           res+=pt.first;
-           
-           for(auto ngb:adj[pt.second]){
-               int edgewt=ngb[1];
-               int edgenode=ngb[0];
-               if(vis[edgenode]==false){
-                   pq.push({edgewt,edgenode});
-               }
-           }
-       }
-       return res;
+        // code here
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>> > pq;
+        pq.push({0,0});
+        vector<bool> vis(V,false);
+        int res=0;
+        while(pq.empty()==false){
+            pair<int,int> pr=pq.top();
+            pq.pop();
+            if(vis[pr.second]==true){
+                continue;
+            }
+            vis[pr.second]=true;
+            res+=pr.first;
+            
+            for(auto edges:adj[pr.second]){
+                // for(auto edges:ngb){
+                    pq.push({edges[1],edges[0]});
+                // }
+            }
+        }
+        return res;
+        
+        
     }
 };
 
