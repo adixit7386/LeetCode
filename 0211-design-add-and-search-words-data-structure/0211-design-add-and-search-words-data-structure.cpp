@@ -29,7 +29,7 @@ public:
                             if(curr->children[j]->isEnd==true) return true;
                             continue;
                         }
-                        else if(curr->children[j]->search(word.substr(i+1,word.size()-i-1))){
+                        if(curr->children[j]->search(word.substr(i+1,word.size()-i-1))){
                                 return true;
                         }
                     }
