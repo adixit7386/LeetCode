@@ -14,7 +14,7 @@ public:
                     ans.push_back({source,ngb});
                 }
             }else if(ngb!=parent){
-                mini[source]=min(mini[source],mini[ngb]);
+                mini[source]=min(mini[source],disc[ngb]);
                 if(mini[ngb]>disc[source]){
                     ans.push_back({source,ngb});
                 }
