@@ -10,29 +10,25 @@
  */
 class Solution {
 public:
-     int getLength(ListNode* head){
-        int length=0;
-        while(head!=NULL){
-            length++;
-            head=head->next;
+    int getLength(ListNode* head){
+        ListNode* curr=head;
+        int count=0;
+        while(curr!=NULL){
+            count++;
+            curr=curr->next;
         }
-        return length;
+        return count;
     }
     int getDecimalValue(ListNode* head) {
-        signed int ans=0;
-        ListNode* curr=head;
         int length=getLength(head);
-         int mul=pow(2,length-1);
-        while(curr!=NULL){
-            ans+= curr->val*mul;
+        int multiplier=pow(2,length-1);
+        int ans=0;
+        while(head!=NULL){
+            ans+= multiplier*head->val;
             
-            curr=curr->next;
-            mul/=2;
+            head=head->next;
+            multiplier/=2;
         }
         return ans;
-       
-        
-        
-       
     }
 };
