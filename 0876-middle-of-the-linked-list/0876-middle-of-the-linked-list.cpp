@@ -11,17 +11,16 @@
 class Solution {
 public:
     ListNode* middleNode(ListNode* head) {
-        if(head==NULL){
-            return head;
-        }
+        if(head==NULL)return NULL;
         
-        ListNode* slowPtr=head;
         ListNode* fastPtr=head;
+        ListNode* slowPtr=head;
         
         while(fastPtr!=NULL && fastPtr->next!=NULL){
-            slowPtr=slowPtr->next;
             fastPtr=fastPtr->next->next;
+            slowPtr=slowPtr->next;
         }
         return slowPtr;
     }
+    
 };
