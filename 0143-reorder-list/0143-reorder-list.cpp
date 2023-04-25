@@ -12,7 +12,7 @@ class Solution {
 public:
     bool even=false;
     int count=0;
-    ListNode* reorder(ListNode* head,int idx,ListNode* prev){
+    ListNode* reorder(ListNode* head,int idx){
         if(idx==(count+1)/2){
             if(even){
                 ListNode* temp=head->next->next;
@@ -24,7 +24,7 @@ public:
                 return temp;
             }
         }
-        ListNode* newNode=reorder(head->next,idx+1,head);
+        ListNode* newNode=reorder(head->next,idx+1);
         // if(prev!=NULL)
         // prev->next=newNode;
         ListNode* temp=newNode->next;
@@ -45,6 +45,6 @@ public:
         
         if((count)%2==0) even=true;
         
-        reorder(head,1,NULL);
+        reorder(head,1);
     }
 };
