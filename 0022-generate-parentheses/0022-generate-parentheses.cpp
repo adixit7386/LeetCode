@@ -7,15 +7,15 @@ public:
             return;
         }
         if(countOpen==countClose){
-            if(countOpen>=1)
+            // if(countOpen>=1)
             generate(countOpen-1,countClose,n,ans+"(");
-        }else if(countOpen<n){
-            if(countOpen>=1)
+        }else if(countOpen>0){
+            // if(countOpen>=1)
             generate(countOpen-1,countClose,n,ans+"(");
-            if(countClose>=1)
+            // if(countClose>=1)
             generate(countOpen,countClose-1,n,ans+")");
         }else{
-            if(countClose>=1)
+            // if(countClose>=1)
             generate(countOpen,countClose-1,n,ans+")");
 
         }
