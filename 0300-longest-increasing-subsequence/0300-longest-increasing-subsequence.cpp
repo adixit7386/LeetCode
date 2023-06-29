@@ -1,35 +1,23 @@
 class Solution {
 public:
-    int ceils(vector<int> &arr,int start,int end,int key){
-        int ans=end+1;
-        while(start<=end){
-            int mid=(start+end)/2;
-            if(arr[mid]>key){
-                ans=mid;
-                end=mid-1;
-            }else if(arr[mid]<key){
-                start=mid+1;
-            }else{
-                return mid;
-            }
+    int lis(vector<int> &nums,int ind,int prev_ind,vector<vector<int>> &dp){
+        //base case
+        if(ind>=nums.size())return 0;
+        if(dp[ind][prev_ind+1]!=-1)return dp[ind][prev_ind+1];
+        int res=lis(nums,ind+1,prev_ind,dp);
+        if(prev_ind==-1||nums[ind]>nums[prev_ind]){
+            res=max(res,1+lis(nums,ind+1,ind,dp));
         }
-        return ans;
+
+
+        return dp[ind][prev_ind+1]=res;
+
+
     }
     int lengthOfLIS(vector<int>& nums) {
         int n=nums.size();
-        vector<int> arr(n);
-        int count=0;
-        arr[0]=nums[0];
-        count=1;
-        for(int i=1;i<n;i++){
-            if(nums[i]>arr[count-1])
-                arr[count++]=nums[i];
-            else {
-                int var=ceils(arr,0,count-1,nums[i]);
-                // cout<<var<<endl;
-                arr[var]=nums[i];
-                }
-        }
-        return count;
+        vector<vector<int>> dp(n,vector<int> (n+1,-1));
+        
+        return lis(nums,0,-1,dp);
     }
 };
