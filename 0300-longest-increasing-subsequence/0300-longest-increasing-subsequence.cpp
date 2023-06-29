@@ -1,23 +1,22 @@
+#include<bits/stdc++.h>
+using namespace std;
 class Solution {
 public:
-    int lis(vector<int> &nums,int ind,int prev_ind,vector<vector<int>> &dp){
-        //base case
-        if(ind>=nums.size())return 0;
-        if(dp[ind][prev_ind+1]!=-1)return dp[ind][prev_ind+1];
-        int res=lis(nums,ind+1,prev_ind,dp);
-        if(prev_ind==-1||nums[ind]>nums[prev_ind]){
-            res=max(res,1+lis(nums,ind+1,ind,dp));
-        }
-
-
-        return dp[ind][prev_ind+1]=res;
-
-
-    }
+    
     int lengthOfLIS(vector<int>& nums) {
-        int n=nums.size();
-        vector<vector<int>> dp(n,vector<int> (n+1,-1));
         
-        return lis(nums,0,-1,dp);
+        vector<int> dp;
+        dp.push_back(nums[0]);
+        for(int i=1;i<nums.size();i++){
+            int dpsize=dp.size();
+            int lbound=
+            lower_bound(dp.begin(),dp.end(),nums[i])-dp.begin();
+            if(lbound<dpsize){
+                dp[lbound]=nums[i];
+            }else{
+                dp.push_back(nums[i]);
+            }
+        }
+        return dp.size();
     }
 };
