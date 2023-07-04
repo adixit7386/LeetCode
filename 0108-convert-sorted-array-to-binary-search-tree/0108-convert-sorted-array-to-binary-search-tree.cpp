@@ -11,31 +11,21 @@
  */
 class Solution {
 public:
-    TreeNode* makeTree(vector<int>&nums,int start,int end){
-        if(start>end){
-            return NULL;
+    TreeNode* maker(vector<int>& v, int low , int high){
+        if(low > high){
+            return{};
         }
-        if(start==end){
-            return new TreeNode(nums[start]);
-        }
-        int mid=(end+start)/2;
-        TreeNode* root=new TreeNode(nums[mid]);
-        root->left=makeTree(nums,start,mid-1);
-        root->right=makeTree(nums,mid+1,end);
+        if(low<=high){
+        int mid = low +(high-low)/2;
+        TreeNode* root = new TreeNode(v[mid]);
+        root->left = maker(v,low,mid-1);
+        root->right = maker(v,mid+1,high);
         return root;
+        }
+        return NULL;
     }
     TreeNode* sortedArrayToBST(vector<int>& nums) {
-        if(nums.size()==0){
-            return NULL;
-        }
-        if(nums.size()==1){
-            return new TreeNode(nums[0]);
-        }
-        int start=0,end=nums.size()-1;
-        // int mid=(end-start)/2;
-        TreeNode* root=makeTree(nums,start,end);
-        // root->left=makeTree(nums,start,mid-1);
-        // root->right=makeTree(nums,mid+1,end);
-        return root;
+        int n = nums.size();
+        return maker(nums,0,n-1);
     }
 };
