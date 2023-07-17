@@ -6,16 +6,43 @@ using namespace std;
 class Solution {
   public:
     // Function to detect cycle in an undirected graph.
-    bool dfs(vector<int> adj[],int src,vector<bool> &vis,int parent){
+    
+    // using dfs
+    // bool dfs(vector<int> adj[],int src,vector<bool> &vis,int parent){
+    //     vis[src]=true;
+    //     for(auto ngb:adj[src]){
+    //         if(vis[ngb]==false){
+    //             if(dfs(adj,ngb,vis,src)==true){
+    //                 return true;
+    //             }
+    //         }else if(ngb!=parent){
+    //                 return true;
+    //             }
+    //     }
+    //     return false;
+    // }
+    
+    // using bfs
+    bool dfs(vector<int> adj[],int src,int V,vector<bool> &vis){
+        
+        vector<int> par(V,-1);
+        queue<int> q;
+        q.push(src);
         vis[src]=true;
-        for(auto ngb:adj[src]){
-            if(vis[ngb]==false){
-                if(dfs(adj,ngb,vis,src)==true){
+        par[src]=-1;
+        while(q.empty()==false){
+            int baap=q.front();
+            q.pop();
+            
+            for(auto beta:adj[baap] ){
+                if(vis[beta]==false){
+                    q.push(beta);
+                    vis[beta]=true;
+                    par[beta]=baap;
+                }else if(par[baap]!=beta){
                     return true;
                 }
-            }else if(ngb!=parent){
-                    return true;
-                }
+            }
         }
         return false;
     }
@@ -24,7 +51,7 @@ class Solution {
         vector<bool> vis(V,false);
         for(int i=0;i<V;i++){
             if(vis[i]==false){
-                if(dfs(adj,i,vis,-1)){
+                if(dfs(adj,i,V,vis)){
                     return true;
                     
                 }
