@@ -11,32 +11,27 @@
  */
 class Solution {
 public:
-    void recoverTree(TreeNode* root) {
-        stack<TreeNode*> st;
-        TreeNode* curr = root;
-        TreeNode* first=NULL;
-        TreeNode* second;
-        TreeNode* prev=NULL;
-        while(curr!=NULL || !st.empty()){
-            while(curr!=NULL){
-
-                st.push(curr);
-                // prev = curr;
-                curr = curr->left;
-
-            }
-            curr = st.top();
-            st.pop();
-            int prevVal = prev==NULL?INT_MIN:prev->val;
-            if(prevVal>curr->val){
-                if(first==NULL)
-                first = prev;
-                second=curr;
-            }
-            // cout<<curr->val<<" ";
-            prev = curr;
-            curr = curr->right;
+    TreeNode* firstNode=NULL;
+    TreeNode* secondNode=NULL;
+    TreeNode* prev=NULL;
+    void preorder(TreeNode* root){
+        if(root==NULL)return;
+        preorder(root->left);
+        // if(prev==NULL)return;
+        if(prev!=NULL && root->val<prev->val){
+            if(firstNode==NULL)
+            firstNode=prev;
+            secondNode=root;
         }
-        swap(first->val,second->val);
+        
+            
+        prev=root;
+        preorder(root->right);
+    }
+    void recoverTree(TreeNode* root) {
+        preorder(root);
+        // if(firstNode==NULL || secondNode==NULL)return;
+        swap(firstNode->val,secondNode->val);
+        return;
     }
 };
